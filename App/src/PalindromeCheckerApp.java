@@ -1,6 +1,10 @@
-public class PalindromeCheckerApp {
+class PalindromeChecker {
+    boolean checkPalindrome(String input) {
+        String str = input.replaceAll("\\s+", "").toLowerCase();
+        return check(str, 0, str.length() - 1);
+    }
 
-    static boolean check(String str, int start, int end) {
+    private boolean check(String str, int start, int end) {
         if (start >= end)
             return true;
 
@@ -9,16 +13,16 @@ public class PalindromeCheckerApp {
 
         return check(str, start + 1, end - 1);
     }
+}
 
+public class PalindromeCheckerApp {
     public static void main(String[] args) {
+        String input = "racecar";
 
-        String input = "Madam In Eden Im Adam";
+        PalindromeChecker obj = new PalindromeChecker();
+        boolean result = obj.checkPalindrome(input);
 
-        String normalized = input.replaceAll("\\s+", "").toLowerCase();
-
-        if (check(normalized, 0, normalized.length() - 1))
-            System.out.println("Palindrome");
-        else
-            System.out.println("Not Palindrome");
+        System.out.println("Input : " + input);
+        System.out.println("Is Palindrome : " + result);
     }
 }
