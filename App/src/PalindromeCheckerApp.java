@@ -1,26 +1,46 @@
-class PalindromeChecker {
-    boolean checkPalindrome(String input) {
+interface PalindromeStrategy {
+    boolean check(String input);
+}
+
+class StackStrategy implements PalindromeStrategy {
+    public boolean check(String input) {
         String str = input.replaceAll("\\s+", "").toLowerCase();
-        return check(str, 0, str.length() - 1);
+
+        java.util.Stack<Character> stack = new java.util.Stack<>();
+
+        for (char c : str.toCharArray())
+            stack.push(c);
+
+        for (char c : str.toCharArray())
+            if (c != stack.pop())
+                return false;
+
+        return true;
+    }
+}
+
+class PalindromeChecker {
+    private PalindromeStrategy strategy;
+
+    PalindromeChecker(PalindromeStrategy strategy) {
+        this.strategy = strategy;
     }
 
-    private boolean check(String str, int start, int end) {
-        if (start >= end)
-            return true;
-
-        if (str.charAt(start) != str.charAt(end))
-            return false;
-
-        return check(str, start + 1, end - 1);
+    boolean checkPalindrome(String input) {
+        return strategy.check(input);
     }
 }
 
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
-        String input = "racecar";
 
-        PalindromeChecker obj = new PalindromeChecker();
-        boolean result = obj.checkPalindrome(input);
+        String input = "level";
+
+        PalindromeStrategy strategy = new StackStrategy();
+
+        PalindromeChecker checker = new PalindromeChecker(strategy);
+
+        boolean result = checker.checkPalindrome(input);
 
         System.out.println("Input : " + input);
         System.out.println("Is Palindrome : " + result);
