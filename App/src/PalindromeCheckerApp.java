@@ -11,9 +11,12 @@ public class PalindromeCheckerApp {
     }
 
     public static void main(String[] args) {
-        String str = "madam";
 
-        if (check(str, 0, str.length() - 1))
+        String input = "Madam In Eden Im Adam";
+
+        String normalized = input.replaceAll("\\s+", "").toLowerCase();
+
+        if (check(normalized, 0, normalized.length() - 1))
             System.out.println("Palindrome");
         else
             System.out.println("Not Palindrome");
